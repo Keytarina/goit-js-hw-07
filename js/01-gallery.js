@@ -29,22 +29,20 @@ function onPhotoClick(event) {
 	if (event.target.nodeName !== "IMG") {
 		return;
 	}
-	console.log(event.target.dataset);
-	const instance = basicLightbox.create(`
-    <div class="modal">
-        <p>
-            Your first lightbox with just a few lines of code.
-            Yes, it's really that simple.
-        </p>
-    </div>
-`);
 
+	const instance = basicLightbox.create(`
+		<div class="modal">
+			<img src="${event.target.dataset.source}">
+		</div>
+	`, {
+		onShow: (instance) => {
+			document.addEventListener("keydown", event => {
+				if(event.key === "Escape"){
+					instance.close();
+				}
+			});
+			
+		}
+	});
 	instance.show();
-	basicLightbox
-		.create(
-			`
-		<img src="${event.target.dataset.source}">
-	`
-		)
-		.show();
 }
